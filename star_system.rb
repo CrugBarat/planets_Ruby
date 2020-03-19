@@ -24,17 +24,16 @@ class StarSystem
     end
 
     def get_planets_with_no_moons()
-      return @planets.select {|planet| planet.number_of_moons == 0}
+      return @planets.find_all {|planet| planet.number_of_moons == 0}
     end
 
     def get_planets_with_more_moons(number)
-      new_planets = @planets.select {|planet| planet.number_of_moons > number}
-      return new_planets.map {|planet| planet.name}
+      find_planets = @planets.find_all {|planet| planet.number_of_moons > number}
+      return find_planets.map {|planet| planet.name}
     end
 
     def get_number_of_planets_closer_than(distance)
-      new_planets = @planets.select {|planet| planet.distance_from_sun < distance}
-      return new_planets.length
+      return @planets.count { |planet| planet.distance_from_sun < distance }
     end
 
     def get_total_number_of_moons()
@@ -42,14 +41,13 @@ class StarSystem
     end
 
     def get_planet_names_sorted_by_increasing_distance_from_sun
-      sorted_planets =  @planets.sort_by {|planet| planet.distance_from_sun}
-      return sorted_planets.map {|planet| planet.name}
+      sort_planets =  @planets.sort_by {|planet| planet.distance_from_sun}
+      return sort_planets.map {|planet| planet.name}
     end
 
-    def get_planet_names_sorted_by_size_decreasing()
-      sorted_planets =  @planets.sort_by {|planet| planet.diameter}
-      sorted_planets.reverse!
-      return sorted_planets.map {|planet| planet.name}
+    def get_planet_names_sorted_by_size_decreasing
+       sort_planets = @planets.sort { |planet1, planet2| planet2.diameter <=> planet1.diameter }
+      return sort_planets.map { |planet| planet.name }
     end
 
 end
